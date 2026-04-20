@@ -1,90 +1,202 @@
 
-## What this project is
+# Laravel Demo Portal
 
-- Laravel application (current setup uses Laravel 11+, PHP 8.2+)
-- Role-based user administration (Admin, Super Admin, User, secondary user)
-- Dealer and manufacturer management
-- File/media uploads, categories and tags, user relation mappings
-- Search and API endpoints for countries/states/cities/dealers/manufacturers
+A comprehensive Laravel-based web application demonstrating advanced PHP development skills, including role-based user management, media file handling, dealer and manufacturer management, and robust API integrations. This project showcases modern web development practices with Laravel 11, PHP 8.2+, and a responsive frontend using Tailwind CSS and Vite.
 
-## Setup instructions
+## Features
 
-1. Clone repository:
+### User Management & Authentication
+- **Role-Based Access Control**: Supports multiple user roles (Super Admin, Admin, User, Secondary User) with granular permissions
+- **User Approval System**: Admin-controlled user activation and approval workflows
+- **Secondary User Invitations**: Invite additional users to accounts with token-based registration
+- **Account Inactivity Management**: Automatic deactivation after 90 days of inactivity
+- **Secure Authentication**: Laravel Sanctum for API token management
+
+### Business Logic
+- **Dealer & Manufacturer Management**: CRUD operations for managing business entities
+- **Industry Categorization**: Organize users and entities by industry sectors
+- **Company Management**: Handle company profiles and associations
+- **Announcements System**: Admin-created announcements with user targeting and reordering
+
+### Media & File Management
+- **File Upload System**: Secure media file uploads with category and tag support
+- **Marketing Materials**: Dedicated section for promotional content with likes, views, and comments
+- **Access Control**: User-specific media permissions and sharing
+- **Image Processing**: Intervention Image integration for image manipulation
+
+### Location Services
+- **Geographic Data**: Countries, states, and cities management
+- **Search APIs**: Efficient search endpoints for location data
+
+### Additional Features
+- **Saved Links**: User bookmarking functionality
+- **Email Integration**: Mailgun/SMTP support for notifications
+- **reCAPTCHA Integration**: Spam protection for forms
+- **Responsive Design**: Mobile-friendly interface with Tailwind CSS
+
+## 🛠 Tech Stack
+
+### Backend
+- **Laravel 11.9**: Modern PHP framework with MVC architecture
+- **PHP 8.2+**: Latest PHP features and performance optimizations
+- **MySQL**: Relational database for data persistence
+- **Laravel Sanctum**: API authentication and token management
+
+### Frontend
+- **Tailwind CSS**: Utility-first CSS framework for responsive design
+- **Vite**: Fast build tool and development server
+- **Axios**: HTTP client for API communications
+
+### Key Libraries
+- **Intervention Image**: Image processing and manipulation
+- **Google reCAPTCHA**: Bot protection
+- **Symfony Mailgun Mailer**: Email delivery
+- **getID3**: Media file metadata extraction
+
+### Development Tools
+- **Composer**: PHP dependency management
+- **NPM**: Node.js package management
+- **PHPUnit**: Unit and feature testing
+- **Laravel Pint**: Code style enforcement
+
+## Prerequisites
+
+Before running this project, ensure you have the following installed:
+
+- **PHP 8.2 or higher**
+- **Composer** (PHP dependency manager)
+- **Node.js 16+ and NPM**
+- **MySQL 5.7+ or MariaDB 10.2+**
+- **Git** (for cloning the repository)
+
+## 🔧 Installation & Setup
+
+1. **Clone the Repository**
    ```bash
-   git clone <your-url>
+   git clone <your-repository-url>
+   cd laravel-demo-portal
    ```
-2. Copy environment file:
+
+2. **Environment Configuration**
    ```bash
    cp .env.example .env
    ```
-3. Update `.env` values with your own database and API settings
-4. Install dependencies:
+   Update the `.env` file with your local settings:
+   - Database credentials (DB_HOST, DB_DATABASE, etc.)
+   - Mailgun API keys (MAILGUN_DOMAIN, MAILGUN_SECRET)
+   - reCAPTCHA keys (RECAPTCHA_SITE_KEY, RECAPTCHA_SECRET_KEY)
+   - Application URL and other environment variables
+
+3. **Install PHP Dependencies**
    ```bash
    composer install
+   ```
+
+4. **Install Node.js Dependencies**
+   ```bash
    npm install
+   ```
+
+5. **Build Frontend Assets**
+   ```bash
    npm run build
    ```
-5. Generate app key:
+
+6. **Generate Application Key**
    ```bash
    php artisan key:generate
    ```
-6. Run migrations and seed sample data:
+
+7. **Database Setup**
    ```bash
-   php artisan migrate --seed
+   php artisan migrate
+   php artisan db:seed
    ```
-7. Start local server:
+
+8. **Start the Development Server**
    ```bash
    php artisan serve
    ```
 
-## Notes for a portfolio repository
+The application will be available at `http://localhost:8000`
 
-- Keep no real client info: names, domains, company emails, internal systems
-- Prefer default demo users and factories for content
-- Add tests for critical operations and endpoints before sharing
+## Database Schema
 
-## Git commands to push
+The application includes the following key entities:
+
+- **Users**: Core user management with roles and approval status
+- **Roles**: Permission-based role definitions
+- **Industries**: Business sector categorization
+- **Companies**: Organization profiles
+- **Dealers**: Business partner management
+- **Manufacturers**: Product manufacturer records
+- **Media Files**: File uploads with metadata and access control
+- **Marketing Materials**: Promotional content management
+- **Locations**: Geographic data (Countries, States, Cities)
+- **Announcements**: Admin communications
+- **User Invitations**: Secondary user invitation system
+
+## API Endpoints
+
+The application provides RESTful API endpoints for data retrieval:
+
+### Location APIs
+- `GET /api/countries/search` - Search countries
+- `GET /api/states/search` - Search states
+- `GET /api/cities/search` - Search cities
+- `GET /api/states/{country}` - Get states by country
+- `GET /api/cities/{state}` - Get cities by state
+
+### Business Entity APIs
+- `GET /api/dealers/search` - Search dealers
+- `GET /api/manufacturers/search` - Search manufacturers
+- `GET /api/industries/search` - Search industries
+
+### Media APIs
+- `POST /media/assigned-users` - Get users assigned to media
+- `POST /marketing-materials/assigned-users` - Get users assigned to marketing materials
+
+## Testing
+
+Run the test suite using PHPUnit:
 
 ```bash
-git init
-git add .
-git commit -m "Sanitize and prepare demo project"
-git branch -M main
-git remote add origin <your-git-url>
-git push -u origin main
+php artisan test
 ```
+
+The project includes unit tests for critical business logic and feature tests for API endpoints and user workflows.
+
+## Deployment
+
+For production deployment:
+
+1. Set `APP_ENV=production` in `.env`
+2. Configure production database and mail settings
+3. Run `php artisan config:cache` and `php artisan route:cache`
+4. Set up web server (Apache/Nginx) with proper document root
+5. Ensure proper file permissions for storage directories
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
 ## License
 
-MIT
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-- Secrets removed from source and now stored in `.env`
-- `.env.example` contains all required keys with placeholders
-- Client/brand names replaced with generic values
-- No hardcoded passwords or production API keys
-- Logs and compiled view caches cleaned
+##  Author
 
-## Tech Stack
+Vinayak Chandran - Laravel Developer
 
-- PHP 8.2+ and Laravel
-- MySQL
-- Mailgun/SMTP (config via `.env`)
+## 📞 Support
 
-## Setup
+For questions or support, please open an issue in the GitHub repository.
 
-1. `git clone <repo>`
-2. `cd directoy`
-3. `cp .env.example .env`
-4. Fill placeholders in `.env`
-5. `composer install`
-6. `npm install && npm run build`
-7. `php artisan key:generate`
-8. `php artisan migrate --seed`
-9. `php artisan serve`
+---
 
-## Configuration
-
-- `APP_NAME` set to `DemoApp`
-- `DB_*` values in `.env`
-- `MAILGUN_*`, `RECAPTCHA_*`, `WEB_URL` in `.env`
+**Note**: This is a demo/portfolio project. All sensitive information has been sanitized, and it uses generic data for demonstration purposes.
 
